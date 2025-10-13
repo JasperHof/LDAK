@@ -1,4 +1,4 @@
-#' Run LDAK executable
+#' Run LDAK executable for Linux, Mac, and Windows systems.
 #'
 #' This function automatically detects the operating system and runs
 #' the corresponding LDAK binary shipped with the package.
@@ -6,7 +6,7 @@
 #' @param args Character vector of arguments to pass to LDAK
 #' @return The output of the system call
 #' @export
-run_ldak <- function(args = character()) {
+ldak <- function(args = character()) {
   os <- Sys.info()[["sysname"]]
 
   exe_name <- switch(
@@ -20,7 +20,7 @@ run_ldak <- function(args = character()) {
   exe_path <- system.file("bin", exe_name, package = "LDAK")
 
   if (exe_path == "") {
-    stop("Could not find the LDAK binary for your OS.")
+    stop("Could not find the LDAK binary for your operating system.")
   }
 
   # Ensure executable permissions on Unix-like systems
