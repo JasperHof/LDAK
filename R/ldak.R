@@ -31,7 +31,7 @@ ldak <- function(args = character()) {
   # Run the executable
   exit_code <- system2(exe_path, args = args, stdout = "", stderr = "")
 
-  if (exit_code != 0) {
+  if (!exit_code %in% c(0,1)) {
     stop("LDAK execution failed with exit code ", exit_code)
   }
 
