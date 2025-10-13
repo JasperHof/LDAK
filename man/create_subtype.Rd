@@ -4,12 +4,12 @@
 \alias{create_subtype}
 \title{Prepare a stratified phenotype for multivariate LDAK.}
 \usage{
-create_subtype(pheno = NULL, cov = NULL, size = 5)
+create_subtype(pheno = NULL, cov = NULL, size = numeric())
 }
 \arguments{
 \item{pheno}{Phenotype matrix or dataframe in PLINK format}
 
-\item{cov}{Covariate vector in PLINK format}
+\item{cov}{Covariate vector}
 
 \item{size}{Number of subgroups for stratifying the phenotype}
 }

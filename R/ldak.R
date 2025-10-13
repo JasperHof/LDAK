@@ -1,7 +1,7 @@
 #' Run LDAK executable for Linux, Mac, and Windows systems.
 #'
 #' This function automatically detects the operating system and runs
-#' the corresponding LDAK binary shipped with the package.
+#' the corresponding LDAK binary for the input arguments.
 #'
 #' @param args Character vector of arguments to pass to LDAK
 #' @return The output of the system call

@@ -7,7 +7,8 @@
 #' @param cov Covariate vector
 #' @param size Number of subgroups for stratifying the phenotype
 #' @param trans Transformation matrix obtained from LDAK
-#' @return The output of the system call
+#' @return A transformed phenotypes which can be used for GWAS analysis
+#' @importFrom stats lm predict quantile
 #' @export
 transform <- function(pheno = NULL, cov = NULL, size = numeric(), trans = NULL) {
 
@@ -21,7 +22,7 @@ transform <- function(pheno = NULL, cov = NULL, size = numeric(), trans = NULL) 
   for (i in 1:5) {
 
     # Fit a quadratic function
-    y <- as.numeric(transformation[i,])
+    y <- as.numeric(trans[i,])
     fit <- lm(y ~ quants_medians + I(quants_medians^2))
 
     # Map covariate values to quantiles, and compute predicted transformation

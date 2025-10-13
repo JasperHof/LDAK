@@ -14,5 +14,5 @@ The output of the system call
 }
 \description{
 This function automatically detects the operating system and runs
-the corresponding LDAK binary shipped with the package.
+the corresponding LDAK binary for the input arguments.
 }
