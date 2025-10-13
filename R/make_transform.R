@@ -10,7 +10,7 @@
 #' @return A transformed phenotypes which can be used for GWAS analysis
 #' @importFrom stats lm predict quantile
 #' @export
-transform <- function(pheno = NULL, cov = NULL, size = numeric(), trans = NULL) {
+make_transform <- function(pheno = NULL, cov = NULL, size = numeric(), trans = NULL) {
 
   # Compute subset
   cov_cases = cov[which(pheno[,3] == 1)]

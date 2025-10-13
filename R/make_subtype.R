@@ -8,7 +8,7 @@
 #' @param size Number of subgroups for stratifying the phenotype
 #' @return The output of the system call
 #' @export
-create_subtype <- function(pheno = NULL, cov = NULL, size = numeric()) {
+make_subtype <- function(pheno = NULL, cov = NULL, size = numeric()) {
 
   if ( dim(pheno)[1] != length(cov) ) {
     stop("Covariate should be a vector, whose length matches the number of individuals in phenotype")
