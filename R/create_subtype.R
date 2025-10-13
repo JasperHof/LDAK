@@ -3,7 +3,8 @@
 #' The binary outcome is stratified based on quantiles of the
 #' associated covariate.
 #'
-#' @param args Character vector of arguments to pass to LDAK
+#' @param pheno Phenotype matrix or dataframe in PLINK format
+#' @param cov Covariate vector in PLINK format
 #' @return The output of the system call
 #' @export
 create_subtype <- function(pheno = NULL, cov = NULL, size = 5) {
