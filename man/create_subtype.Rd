@@ -10,6 +10,8 @@ create_subtype(pheno = NULL, cov = NULL, size = 5)
 \item{pheno}{Phenotype matrix or dataframe in PLINK format}
 
 \item{cov}{Covariate vector in PLINK format}
+
+\item{size}{Number of subgroups for stratifying the phenotype}
 }
 \value{
 The output of the system call

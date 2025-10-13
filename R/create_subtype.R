@@ -5,6 +5,7 @@
 #'
 #' @param pheno Phenotype matrix or dataframe in PLINK format
 #' @param cov Covariate vector in PLINK format
+#' @param size Number of subgroups for stratifying the phenotype
 #' @return The output of the system call
 #' @export
 create_subtype <- function(pheno = NULL, cov = NULL, size = 5) {
