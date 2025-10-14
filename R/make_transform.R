@@ -7,10 +7,11 @@
 #' @param cov Covariate vector
 #' @param size Number of subgroups for stratifying the phenotype
 #' @param trans Transformation matrix obtained from LDAK
+#' @param spar Smoothing parameter (default: 0.2)
 #' @return A transformed phenotypes which can be used for GWAS analysis
-#' @importFrom stats lm predict quantile
+#' @importFrom stats lm predict quantile smooth.spline
 #' @export
-make_transform <- function(pheno = NULL, cov = NULL, size = numeric(), trans = NULL) {
+make_transform <- function(pheno = NULL, cov = NULL, size = numeric(), trans = NULL, spar = 0.2) {
 
   # Compute subset
   cov_cases = cov[which(pheno[,3] == 1)]
@@ -23,11 +24,11 @@ make_transform <- function(pheno = NULL, cov = NULL, size = numeric(), trans = N
 
     # Fit a quadratic function
     y <- as.numeric(trans[i,])
-    fit <- lm(y ~ quants_medians + I(quants_medians^2))
+    fit <- smooth.spline(quants_medians, y, spar = 0.2)
 
     # Map covariate values to quantiles, and compute predicted transformation
     quantiles <- (2 * rank(cov_cases) - 1) / (2 * max(rank(cov_cases)))
-    y_pred <- predict(fit, newdata = data.frame(quants_medians = quantiles))
+    y_pred <- predict(fit, quantiles)$y
 
     # Add these values to new transformed phenotype matrix
     transformed[which(pheno[,3] == 1),i] = y_pred

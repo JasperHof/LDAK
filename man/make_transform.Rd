@@ -4,7 +4,13 @@
 \alias{make_transform}
 \title{Compute transformed phenotype based on LDAK output.}
 \usage{
-make_transform(pheno = NULL, cov = NULL, size = numeric(), trans = NULL)
+make_transform(
+  pheno = NULL,
+  cov = NULL,
+  size = numeric(),
+  trans = NULL,
+  spar = 0.2
+)
 }
 \arguments{
 \item{pheno}{Phenotype matrix or dataframe in PLINK format}
@@ -14,6 +20,8 @@ make_transform(pheno = NULL, cov = NULL, size = numeric(), trans = NULL)
 \item{size}{Number of subgroups for stratifying the phenotype}
 
 \item{trans}{Transformation matrix obtained from LDAK}
+
+\item{spar}{Smoothing parameter (default: 0.2)}
 }
 \value{
 A transformed phenotypes which can be used for GWAS analysis
