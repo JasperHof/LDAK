@@ -13,12 +13,20 @@
 #' @export
 make_transform <- function(pheno = NULL, cov = NULL, size = numeric(), trans = NULL, spar = 0.2) {
 
-  # Compute subset
+  # Compute subset - and quants used in creating phenotype
   cov_cases = cov[which(pheno[,3] == 1)]
+  quants = quantile(unique(as.numeric(cov_cases)), (1:(size-1))/size, na.rm = T)
+
+  # Derive the mean quantile per subgroup - this might be non-trivial for discrete data
+  quants_split <- cut(as.numeric(cov_cases),
+                      breaks = c(-Inf, quants, Inf),  # use -Inf and Inf to cover all values
+                      labels = FALSE,                 # numeric codes
+                      right = TRUE)
+  medians = sapply(1:size, function(i) median(cov_cases[quants_split == i], na.rm = T))
+  quant_medians = sapply(1:size, function(i) (2 * rank(cov_cases)[which.min(abs(cov_cases - medians[i]))] - 1) / (2 * max(rank(cov_cases))))
 
   # Compute new phenotype by smoothing transformed phenotype
   transformed <- matrix(NA, dim(pheno)[1], 5)
-  quants_medians <- (2 * (1:size)-1)/(2*size)
 
   for (i in 1:5) {
 

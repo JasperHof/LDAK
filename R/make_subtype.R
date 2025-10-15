@@ -17,13 +17,13 @@ make_subtype <- function(pheno = NULL, cov = NULL, size = numeric()) {
     stop("Phenotypes should be 0, 1, or NA (missing)")
   }
 
-  # Compute quantiles of cases
-  quants = quantile(as.numeric(cov[which(pheno[,3] == 1)]), (1:(size-1))/size, na.rm = T)
+  # Compute quantiles of cases - restrict to unique covariate values
+  quants = quantile(unique(as.numeric(cov[which(pheno[,3] == 1)])), (1:(size-1))/size, na.rm = T)
 
   quants_split <- cut(as.numeric(cov),
                     breaks = c(-Inf, quants, Inf),  # use -Inf and Inf to cover all values
                     labels = FALSE,                 # numeric codes
-                    right = FALSE)
+                    right = TRUE)
   quants_group <- sapply(1:size, function(i) as.numeric(quants_split == i))
 
   # Set controls to zero and cases of other subgroup to missing
