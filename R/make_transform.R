@@ -23,7 +23,7 @@ make_transform <- function(pheno = NULL, cov = NULL, size = numeric(), trans = N
                       labels = FALSE,                 # numeric codes
                       right = TRUE)
   medians = sapply(1:size, function(i) median(cov_cases[quants_split == i], na.rm = T))
-  quant_medians = sapply(1:size, function(i) (2 * rank(cov_cases)[which.min(abs(cov_cases - medians[i]))] - 1) / (2 * max(rank(cov_cases))))
+  quants_medians = sapply(1:size, function(i) (2 * rank(cov_cases)[which.min(abs(cov_cases - medians[i]))] - 1) / (2 * max(rank(cov_cases))))
 
   # Compute new phenotype by smoothing transformed phenotype
   transformed <- matrix(NA, dim(pheno)[1], 5)
