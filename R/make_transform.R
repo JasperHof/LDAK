@@ -11,11 +11,17 @@
 #' @return A transformed phenotypes which can be used for GWAS analysis
 #' @importFrom stats lm predict quantile smooth.spline
 #' @export
-make_transform <- function(pheno = NULL, cov = NULL, size = numeric(), trans = NULL, spar = 0.2) {
+make_transform <- function(pheno = NULL, cov = NULL, size = numeric(), trans = NULL, spar = 0.2, discrete = F) {
 
-  # Compute subset - and quants used in creating phenotype
+  # Compute subset of covariates for cases - and quants used in creating phenotype
   cov_cases = cov[which(pheno[,3] == 1)]
-  quants = quantile(unique(as.numeric(cov_cases)), (1:(size-1))/size, na.rm = T)
+
+  # Quantiles are expressed differently in case of discrete-ish distribution. For age: pick discrete = F
+  if (discrete) {
+    quants <- quantile(unique(as.numeric(cov_cases)), (1:(size - 1)) / size, na.rm = TRUE)
+  } else {
+    quants <- quantile(as.numeric(cov_cases), (1:(size - 1)) / size, na.rm = TRUE)
+  }
 
   # Derive the mean quantile per subgroup - this might be non-trivial for discrete data
   quants_split <- cut(as.numeric(cov_cases),
@@ -30,7 +36,7 @@ make_transform <- function(pheno = NULL, cov = NULL, size = numeric(), trans = N
 
   for (i in 1:5) {
 
-    # Fit a quadratic function
+    # Fit a cubic spline function
     y <- as.numeric(trans[i,])
     fit <- smooth.spline(quants_medians, y, spar = 0.2)
 
